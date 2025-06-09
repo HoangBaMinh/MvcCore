@@ -1,0 +1,112 @@
+﻿@model mvcCore.Models.EmployeeViewModel
+
+<div class="mt-2" style="max-width: 50%">
+	<div class="row">
+		<h2>Nhân viên</h2>
+		<form asp-action="Employees">
+			<div class="row">
+				<div class="col-md-8">
+					<input name="term" class="form-control" placeholder="Tìm kiếm theo tên" />
+				</div>
+				<div class="col-md-4">
+					<button type="submit" class="btn btn-info">Search</button>
+				</div>
+			</div>
+		</form>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>
+						<a href="/Employee/Employees?orderBy=@Model.NameSortOrder">Tên</a>
+					</th>
+					<th>
+						<a href="/Employee/Employees?orderBy=@Model.EmailSortOrder">Email</a>
+					</th>
+				</tr>
+			</thead>
+
+			@foreach (var emp in Model.Employees)
+			{
+				<tr>
+					<td>@emp.Name</td>
+					<td>@emp.Email</td>
+				</tr>
+			}
+		</table>
+	</div>
+
+	@* phan trang *@
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @if (Model.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="/Employee/Employees?term=@Model.Term&orderBy=@Model.OrderBy&currentPage=@(Model.CurrentPage - 1)" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+
+            @* Hiện 3 page đầu *@
+            @for (int i = 1; i <= Math.Min(3, Model.TotalPages); i++)
+            {
+                if (i == Model.CurrentPage)
+                {
+                    <li class="page-item active"><a class="page-link" href="#">@i</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" href="/Employee/Employees?term=@Model.Term&orderBy=@Model.OrderBy&currentPage=@i">@i</a></li>
+                }
+            }
+
+            @* Dấu ... nếu cần giữa *@
+            @if (Model.CurrentPage > 4 && Model.TotalPages > 6)
+            {
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+            }
+
+            @* Hiện page hiện tại nếu nó không thuộc 3 đầu/cuối *@
+            @if (Model.CurrentPage > 3 && Model.CurrentPage < Model.TotalPages - 2)
+            {
+                <li class="page-item active"><a class="page-link" href="#">@Model.CurrentPage</a></li>
+            }
+
+            @* Dấu ... nếu cần giữa *@
+            @if (Model.CurrentPage < Model.TotalPages - 3 && Model.TotalPages > 6)
+            {
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+            }
+
+            @* Hiện 3 page cuối *@
+            @for (int i = Math.Max(Model.TotalPages - 2, 4); i <= Model.TotalPages; i++)
+            {
+                if (i > 3)
+                {
+                    if (i == Model.CurrentPage)
+                    {
+                        <li class="page-item active"><a class="page-link" href="#">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a class="page-link" href="/Employee/Employees?term=@Model.Term&orderBy=@Model.OrderBy&currentPage=@i">@i</a></li>
+                    }
+                }
+            }
+
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="/Employee/Employees?term=@Model.Term&orderBy=@Model.OrderBy&currentPage=@(Model.CurrentPage + 1)" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+
+
+
+
+</div>

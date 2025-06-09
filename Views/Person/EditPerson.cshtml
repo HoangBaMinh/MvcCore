@@ -1,0 +1,24 @@
+﻿@model mvcCore.Models.Domain.Person
+
+<div class="mt-2" style="max-width: 50%">
+    <form asp-action="EditPerson" method="post">
+        <input type="hidden" asp-for="Id" /> <!-- Đảm bảo có Id để biết đang sửa người nào -->
+
+        <h2 class="mb-4">Sửa thông tin người</h2>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Tên</label>
+            <input asp-for="Name" type="text" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" type="text" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Lưu</button>
+        <a href="/Person/DisplayPersons" class="btn btn-secondary ms-2">Tất cả người</a>
+    </form>
+</div>

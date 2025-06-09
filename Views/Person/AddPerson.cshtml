@@ -1,0 +1,33 @@
+﻿@model mvcCore.Models.Domain.Person
+
+@{
+    // Layout = "_Layout"; // Bỏ ghi chú nếu bạn dùng layout
+}
+
+<div class="mt-2" style="max-width: 50%">
+    <form asp-action="AddPerson" method="post">
+        <h2 class="mb-4">Thêm người</h2>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Tên</label>
+            <input asp-for="Name" type="text" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" type="text" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+		@if (TempData["msg"] != null)
+		{
+			<div class="mb3">
+				@TempData["msg"]
+			</div>
+		}
+
+        <button type="submit" class="btn btn-primary">Lưu</button>
+        <a href="/Person/DisplayPersons" class="btn btn-secondary ms-2">Tất cả người</a>
+    </form>
+</div>
